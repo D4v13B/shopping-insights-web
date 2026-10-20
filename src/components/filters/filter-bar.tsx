@@ -25,6 +25,7 @@ const YES_NO: Option[] = [
 ];
 
 /** Barra de filtros global: todo su estado vive en la URL. */
+/** `stacked` = versión del panel móvil: usa otros ids para no duplicar los de la barra de escritorio. */
 export function FilterBar({ stacked = false }: { stacked?: boolean }) {
   const { filters, setFilter, clearFilters } = useFilters();
   const { data: options } = useQuery(filterOptionsQuery());
@@ -88,7 +89,7 @@ export function FilterBar({ stacked = false }: { stacked?: boolean }) {
         {config.map((f) => (
           <FilterSelect
             key={f.key}
-            id={`filter-${f.key}`}
+            id={`${stacked ? "mobile-" : ""}filter-${f.key}`}
             label={f.label}
             allLabel={f.all}
             options={f.options}

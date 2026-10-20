@@ -6,7 +6,7 @@ import { z } from "zod";
 import { NoResults } from "@/components/common/empty-state";
 import { SectionCard, SectionCardSkeleton } from "@/components/common/section-card";
 import { PAGE_SIZES, PurchasesTable } from "@/components/purchases/data-table";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import { useFilters } from "@/hooks/use-filters";
@@ -86,10 +86,11 @@ function Purchases() {
       title="Compras"
       description="Paginación, orden y búsqueda se resuelven en el servidor"
       action={
-        <Button variant="outline" nativeButton={false} render={<a href={exportUrl} download />}>
+        // Enlace semántico (no botón): es una descarga que el navegador maneja de forma nativa.
+        <a href={exportUrl} download className={buttonVariants({ variant: "outline" })}>
           <IconDownload data-icon="inline-start" />
           Exportar CSV
-        </Button>
+        </a>
       }
     >
       <div className="flex flex-col gap-4">

@@ -1,6 +1,6 @@
 import { IconMapOff } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Empty,
   EmptyContent,
@@ -23,9 +23,9 @@ export function NotFound() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button nativeButton={false} render={<Link to="/" />}>
+        <Link to="/" className={buttonVariants()}>
           Volver al resumen
-        </Button>
+        </Link>
       </EmptyContent>
     </Empty>
   );
