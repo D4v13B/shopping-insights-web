@@ -59,11 +59,11 @@ function Customers() {
     <>
       <Alert>
         <IconAlertCircle />
-        <AlertTitle>Sesgo del dataset: ninguna mujer está suscrita</AlertTitle>
+        <AlertTitle>Sesgo del dataset: ninguna mujer está suscrita ni usó promociones</AlertTitle>
         <AlertDescription>
-          Todos los clientes suscritos son hombres y hay el doble de hombres que de mujeres. Las
-          comparaciones por género y suscripción reflejan cómo se generó el dataset (es sintético),
-          no necesariamente un comportamiento real.
+          Todos los suscritos son hombres, todos los suscritos usaron promoción y hay el doble de
+          hombres que de mujeres. Las comparaciones por género, suscripción y promoción reflejan
+          cómo se generó el dataset (es sintético), no necesariamente un comportamiento real.
         </AlertDescription>
       </Alert>
 
