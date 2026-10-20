@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUN_VERSION: 1.3.11
+
+jobs:
+  check:
+    name: Lint, tipos, contrato, tests y build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with: { bun-version: "${{ env.BUN_VERSION }}" }
+      - run: bun install --frozen-lockfile
+      - name: Biome
+        run: bun run lint
+      - name: TypeScript
+        run: bun run typecheck
+      - name: Los tipos coinciden con el contrato versionado
+        run: |
+          bun run gen:types
+          git diff --exit-code -- src/contract || (echo "::error::Ejecuta 'bun run sync:api' y versiona el resultado" && exit 1)
+      - name: Vitest
+        run: bun run test
+      - name: Build
+        run: bun run build
+
+  docker:
+    name: Build de la imagen
+    runs-on: ubuntu-latest
+    needs: [check]
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t shopping-insights-web .
