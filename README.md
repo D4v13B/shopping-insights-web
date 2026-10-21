@@ -18,6 +18,22 @@ El proyecto ocupa tres repositorios:
 |---|---|---|
 | ![Mapa coroplético de ventas por estado](docs/img/geografia.png) | ![Tabla de compras filtrada y ordenada](docs/img/compras.png) | ![Hallazgos de calidad del ETL](docs/img/calidad.png) |
 
+## Despliegue
+
+La web **no tiene** su propio Compose del stack: se levanta con Docker desde
+**`shopping-insights-api`**, con los tres repos como **carpetas hermanas**:
+
+```
+carpeta-padre/
+├── shopping-insights-etl/
+├── shopping-insights-api/    ← cp .env.example .env && docker compose up --build
+└── shopping-insights-web/    ← contexto de build ../shopping-insights-web
+```
+
+Variables del stack (`VITE_API_URL`, `API_INTERNAL_URL`, Kaggle para el ETL, etc.) están en el
+[`.env.example` de shopping-insights-api](https://github.com/D4v13B/shopping-insights-api/blob/main/.env.example).
+Este repo solo necesita [`.env.example`](.env.example) para desarrollo local con `bun run dev`.
+
 ## Funcionalidad
 
 | Vista | Qué responde |
@@ -39,10 +55,7 @@ La web necesita la API en marcha. Todo se levanta desde el repo de la API, con l
 clonados como carpetas hermanas:
 
 ```bash
-git clone https://github.com/D4v13B/shopping-insights-etl.git
-git clone https://github.com/D4v13B/shopping-insights-api.git
-git clone https://github.com/D4v13B/shopping-insights-web.git
-
+# Clonar los tres en la misma carpeta padre, luego:
 cd shopping-insights-api
 cp .env.example .env
 docker compose up --build
